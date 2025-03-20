@@ -7,9 +7,6 @@ import OtherCities from './components/weather/OtherCities'
 
 function App() {
   return (
-    // <WeatherProvider>
-    // </WeatherProvider>
-
     <div>
       <div className="min-h-screen bg-black p-4 md:p-6">
         <Header />
@@ -20,6 +17,10 @@ function App() {
             <OtherCities />
           </div>
           
+          <div className="order-2 mt-6 md:mt-0">
+              <ForecastSection />
+          </div>
+            
 
         </div>
       </div>
