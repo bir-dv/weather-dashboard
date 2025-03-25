@@ -53,7 +53,7 @@ function ForecastSection() {
     const weeklyForecast = Object.values(dailyForecasts).slice(0, 7);
     
     return (
-      <div className="bg-cyan-700 rounded-3xl p-6 text-white">
+      <div className="bg-cyan-700 rounded-3xl p-6 text-white md:min-h-full">
       <h3 className="text-xl mb-6 mt-10 text-center">Weekly Forecast</h3>
       <div className="space-y-4 md:py-5">
         {weeklyForecast.map((day, index) => (
