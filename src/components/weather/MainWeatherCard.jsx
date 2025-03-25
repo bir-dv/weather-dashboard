@@ -1,29 +1,33 @@
-import { useEffect, useState } from "react";
-import { weatherService } from "../../services/weatherService";
+import { useWeatherData } from "../../hooks/useWeatherData";
+import WeatherIcon from "./WeatherIcon";
+
 
 function MainWeatherCard() {
-  const [weatherData, setWeatherData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  useEffect(()=>{
-    const fetchWeather = async ()=>{
-      try {
-        setLoading(true);
-        const data = await weatherService.getCurrentWeather('Addis Ababa');
-        console.log('Fetched Weather Data:', data); // Debug log
-        setWeatherData(data);
-      } catch (err) {
-        console.error('Error fetching weather:', err);
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
+  const { currentWeather: weatherData, loading, error } = useWeatherData();
+
+    // Helper function to determine weather icon type based on conditions
+    const getWeatherIcon = (weatherMain, temp) => {
+      // Convert weather condition to lowercase for consistent comparison
+      const condition = weatherMain.toLowerCase();
+      
+      // Map OpenWeather conditions to your icon types
+      const weatherMap = {
+        'clear': 'sunny',
+        'clouds': 'cloudy',
+        'rain': 'rainy',
+        'drizzle': 'rainy',
+        'thunderstorm': 'thunder',
+        'snow': 'snowy',
+        'mist': 'partly-cloudy',
+        'fog': 'partly-cloudy',
+        'haze': 'partly-cloudy'
+      };
+  
+      return weatherMap[condition] || 'sunny'; // Default to sunny if condition not found
     };
-    fetchWeather();
-  },[]);
-    console.log('Component State:', { weatherData, loading, error });
 
+    //this show loading state
     if (loading) {
       return (
         <div className="border border-white rounded-3xl p-4 md:p-8 text-white mx-auto">
@@ -34,6 +38,7 @@ function MainWeatherCard() {
       );
     }
 
+    //show error state
     if (error) {
       return (
         <div className="border border-white rounded-3xl p-4 md:p-8 text-white mx-auto">
@@ -53,12 +58,19 @@ function MainWeatherCard() {
       weather: [{ main: weatherMain }]
     } = weatherData;
 
+    const iconType = getWeatherIcon(weatherMain, temp);
 
 
     return (
       <div className="border border-white rounded-3xl p-4 md:p-8 text-white mx-auto">
         <div className="flex flex-col items-center text-center py-4">
-          <div className="text-yellow-400 text-4xl md:text-6xl mb-2 md:mb-4">☀️</div>
+          <div className="mb-4">
+            <WeatherIcon 
+              type={iconType} 
+              size="large" 
+              className="text-white"
+            />
+          </div>
           <div className="text-5xl md:text-6xl font-bold md:mb-1 mb-2">{Math.round(temp)}°C</div>
           <h2 className="text-2xl md:text-3xl mb-4 md:mb-6" > {name} </h2>
           
