@@ -71,8 +71,8 @@ function OtherCities() {
 
     useEffect(() => {
       fetchCitiesData();
-      // Set up interval for updates city every 5 minutes
-      const interval = setInterval(fetchCitiesData, 200000);
+      // Set up interval for updates city every 30 minutes
+      const interval = setInterval(fetchCitiesData, 1800000);
       return () => clearInterval(interval); // to Cleanup interval on unmount
 
     }, []);
