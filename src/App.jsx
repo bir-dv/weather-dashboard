@@ -3,6 +3,7 @@ import Header from './components/layout/Header'
 import MainWeatherCard from './components/weather/MainWeatherCard'
 import ForecastSection from './components/weather/ForecastSection'
 import OtherCities from './components/weather/OtherCities'
+import InfoSection from './components/weather/InfoSection.jsx'
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
           
           <div className="order-2 mt-6 md:mt-0">
               <ForecastSection />
+          </div>
+          <div className='order-3 mt-6 md:mt-0'>
+          <InfoSection />
           </div>
             
         </div>
